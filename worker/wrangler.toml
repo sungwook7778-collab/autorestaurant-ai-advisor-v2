@@ -1,3 +1,6 @@
 name = "ai-proxy"
 main = "index.ts"
 compatibility_date = "2025-01-01"
+
+[vars]
+GOOGLE_API_KEY = "AIzaSyD8mWpAoU7gCWvXG37OCzkx5MCCyfcLhuQ"
