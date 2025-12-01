@@ -1,0 +1,5 @@
+{
+  "name": "AutoRestaurant AI Advisor",
+  "description": "AI-powered restaurant automation consultant that analyzes store images and cost structures to recommend robotic solutions and calculate ROI.",
+  "requestFramePermissions": []
+}
