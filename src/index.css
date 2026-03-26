@@ -1812,7 +1812,61 @@ input[type="range"]::-webkit-slider-thumb:hover {
   text-align: center; margin-top: 3px;
 }
 
-/* KPI 4諛뺤뒪 */
+/* 공통 서브 라벨 */
+.opfin-sub-lbl {
+  font-size: 9px; font-weight: 700; color: #9CA3AF;
+  letter-spacing: 0.08em; margin-bottom: 7px;
+}
+
+/* 연도별 누적 수익 바 */
+.opfin-yearly {
+  margin: 10px 0 8px; padding: 12px 14px;
+  background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 10px;
+}
+.opfin-yr-row {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+}
+.opfin-yr-row:last-child { margin-bottom: 0; }
+.opfin-yr-label {
+  font-size: 11px; font-weight: 700; color: #374151;
+  width: 36px; flex-shrink: 0; white-space: nowrap;
+}
+.opfin-yr-track {
+  flex: 1; height: 10px; background: #E5E7EB; border-radius: 5px; overflow: hidden;
+}
+.opfin-yr-fill {
+  height: 100%; border-radius: 5px; transition: width 0.9s ease;
+}
+.opfin-yr-val {
+  font-size: 12px; font-weight: 700; width: 64px;
+  text-align: right; flex-shrink: 0; white-space: nowrap;
+}
+.yr-pos { color: #047857; }
+.yr-neg { color: #DC2626; }
+
+/* 월 수익 구성 비율 */
+.opfin-gains {
+  margin-bottom: 10px; padding: 12px 14px;
+  background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 10px;
+}
+.opfin-gains-bar {
+  height: 12px; border-radius: 6px; overflow: hidden;
+  display: flex; margin-bottom: 10px; gap: 2px;
+}
+.opfin-gains-seg {
+  height: 100%; transition: width 0.9s ease; min-width: 4px;
+}
+.opfin-gains-seg:first-child { border-radius: 6px 0 0 6px; }
+.opfin-gains-seg:last-child  { border-radius: 0 6px 6px 0; }
+.opfin-gains-legend { display: flex; gap: 6px; }
+.opfin-gains-item {
+  display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0;
+}
+.opfin-gains-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.opfin-gains-name { font-size: 10px; color: #6B7280; white-space: nowrap; flex-shrink: 0; }
+.opfin-gains-amt  { font-size: 10px; font-weight: 700; color: #111827; margin-left: auto; white-space: nowrap; }
+
+/* KPI 4박스 */
 .opfin-kpi-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto;
 }

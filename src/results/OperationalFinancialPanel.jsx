@@ -37,6 +37,72 @@ function MetricBar({ before, after, unit }) {
   );
 }
 
+/* ── 연도별 누적 수익 ─────────────────────────────── */
+function YearlyBars({ timeline }) {
+  const get = (m) => timeline[m - 1]?.cumulative ?? 0;
+  const years = [
+    { label: '1년차', month: 12, val: get(12), color: '#3B82F6' },
+    { label: '2년차', month: 24, val: get(24), color: '#8B5CF6' },
+    { label: '3년차', month: 36, val: get(36), color: '#10B981' },
+  ];
+  const maxAbs = Math.max(...years.map((y) => Math.abs(y.val)), 1);
+
+  return (
+    <div className="opfin-yearly">
+      <div className="opfin-sub-lbl">YEARLY CUMULATIVE NET BENEFIT</div>
+      {years.map((y) => {
+        const pct = Math.max(0, (y.val / maxAbs) * 100);
+        const wan = Math.round(y.val / 10000).toLocaleString();
+        return (
+          <div key={y.label} className="opfin-yr-row">
+            <span className="opfin-yr-label">{y.label}</span>
+            <div className="opfin-yr-track">
+              <div className="opfin-yr-fill" style={{ width: `${pct}%`, background: y.color }} />
+            </div>
+            <span className={`opfin-yr-val ${y.val >= 0 ? 'yr-pos' : 'yr-neg'}`}>
+              {y.val >= 0 ? '+' : ''}{wan}만
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ── 월 수익 구성 비율 ────────────────────────────── */
+function GainsBreakdown({ laborSavings, throughputGain, wasteSavings }) {
+  const total = laborSavings + throughputGain + wasteSavings || 1;
+  const items = [
+    { label: '인건비 절감',  val: laborSavings,    color: '#3B82F6' },
+    { label: '출고 효율',    val: throughputGain,  color: '#8B5CF6' },
+    { label: '폐기 감소',    val: wasteSavings,    color: '#10B981' },
+  ];
+  return (
+    <div className="opfin-gains">
+      <div className="opfin-sub-lbl">MONTHLY GAINS STRUCTURE</div>
+      <div className="opfin-gains-bar">
+        {items.map((i) => (
+          <div
+            key={i.label}
+            className="opfin-gains-seg"
+            style={{ width: `${(i.val / total) * 100}%`, background: i.color }}
+            title={`${i.label}: ${Math.round(i.val / 10000)}만원`}
+          />
+        ))}
+      </div>
+      <div className="opfin-gains-legend">
+        {items.map((i) => (
+          <div key={i.label} className="opfin-gains-item">
+            <span className="opfin-gains-dot" style={{ background: i.color }} />
+            <span className="opfin-gains-name">{i.label}</span>
+            <span className="opfin-gains-amt">{Math.round(i.val / 10000)}만원</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function CashFlowTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null;
   const val = payload[0]?.value;
@@ -51,8 +117,11 @@ function CashFlowTooltip({ active, payload, label }) {
 }
 
 export default function OperationalFinancialPanel({ results }) {
-  const { operationalMetrics: om, monthlyTimeline, paybackMonths,
-          roiOneYear, npv3Year, annualNetBenefit } = results;
+  const {
+    operationalMetrics: om, monthlyTimeline, paybackMonths,
+    roiOneYear, npv3Year, annualNetBenefit,
+    monthlyLaborSavings, monthlyThroughputGain, monthlyWasteSavings,
+  } = results;
   if (!om) return null;
 
   const breakMonth = paybackMonths ? Math.round(paybackMonths) : null;
@@ -178,6 +247,16 @@ export default function OperationalFinancialPanel({ results }) {
             </div>
           )}
         </div>
+
+        {/* 연도별 누적 수익 */}
+        <YearlyBars timeline={monthlyTimeline} />
+
+        {/* 월 수익 구성 비율 */}
+        <GainsBreakdown
+          laborSavings={monthlyLaborSavings}
+          throughputGain={monthlyThroughputGain}
+          wasteSavings={monthlyWasteSavings}
+        />
 
         {/* KPI 4박스 */}
         <div className="opfin-kpi-grid">
