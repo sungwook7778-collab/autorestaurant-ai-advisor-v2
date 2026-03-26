@@ -6,7 +6,6 @@ import ScenarioAnalysis from './ScenarioAnalysis.jsx';
 import CalculationDetail from './CalculationDetail.jsx';
 import PDFReport from './PDFReport.jsx';
 import AsIsLossPanel from './AsIsLossPanel.jsx';
-import SimMethodologyPanel from './SimMethodologyPanel.jsx';
 import { formatWon, formatMonths } from '../utils/formatters.js';
 import { INDUSTRY_DEFAULTS } from '../engine/industryDefaults.js';
 import { formatKitchenEquipmentHeadline } from '../engine/aggregateKitchenSelections.js';
@@ -74,9 +73,6 @@ export default function Dashboard({ state, results, onRestart }) {
 
       {/* AS-IS 매몰 비용 분석 */}
       <AsIsLossPanel asIsLoss={results.asIsLoss} />
-
-      {/* Hybrid DES 시뮬레이션 방법론 */}
-      <SimMethodologyPanel des={results.des} paybackMonths={results.paybackMonths} />
 
       {/* 핵심 KPI 카드 */}
       <SummaryCards results={results} />
