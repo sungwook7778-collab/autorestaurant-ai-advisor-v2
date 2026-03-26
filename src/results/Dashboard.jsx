@@ -5,6 +5,7 @@ import TimelineChart from './TimelineChart.jsx';
 import ScenarioAnalysis from './ScenarioAnalysis.jsx';
 import CalculationDetail from './CalculationDetail.jsx';
 import PDFReport from './PDFReport.jsx';
+import AsIsLossPanel from './AsIsLossPanel.jsx';
 import { formatWon, formatMonths } from '../utils/formatters.js';
 import { INDUSTRY_DEFAULTS } from '../engine/industryDefaults.js';
 import { formatKitchenEquipmentHeadline } from '../engine/aggregateKitchenSelections.js';
@@ -69,6 +70,9 @@ export default function Dashboard({ state, results, onRestart }) {
           ))}
         </div>
       </div>
+
+      {/* AS-IS 매몰 비용 분석 */}
+      <AsIsLossPanel asIsLoss={results.asIsLoss} />
 
       {/* 핵심 KPI 카드 */}
       <SummaryCards results={results} />

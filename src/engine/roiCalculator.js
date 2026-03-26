@@ -4,9 +4,16 @@
  * 시간의 가치(NPV), 임금 상승률, 운영 효율 등 종합 반영
  */
 import { aggregateKitchenFromState } from './aggregateKitchenSelections.js';
+import { INDUSTRY_DEFAULTS } from './industryDefaults.js';
 
 const DISCOUNT_RATE_MONTHLY = 0.03 / 12; // 연 3% 할인율
 const PROFIT_MARGIN_MULTIPLIER = 0.25; // 매출 증가분의 25%를 순이익으로 가정
+
+// 업종별 피크타임 손실 계수 (throughput gap × 기회비용율)
+const INDUSTRY_PEAK_MULTIPLIER = {
+  fastfood: 0.75, buffet: 0.60, korean: 0.70,
+  japanese: 0.68, western: 0.65, cafe: 0.55,
+};
 
 /**
  * 메인 ROI 계산 함수 (제품군별 주방 장비 선택 집계 기준)
@@ -216,7 +223,42 @@ export function calculateROI(inputs) {
 
     equipmentSummaryLines,
     proposalRationale: agg.rationale,
+
+    // AS-IS 매몰 비용 분석
+    asIsLoss: computeAsIsLoss(inputs),
   };
+}
+
+/**
+ * AS-IS 운영 손실 (현재 자동화 미도입 시 매몰 비용) 계산
+ * 4개 카테고리: 인적 리스크 / 운영 효율성 손실 / 품질 관리 손실 / 재무적 기타 손실
+ */
+function computeAsIsLoss({ staffCount, avgMonthlyWagePerPerson, monthlyRevenue, industry }) {
+  const ind = INDUSTRY_DEFAULTS[industry] || INDUSTRY_DEFAULTS.korean;
+  const throughputPct = (ind.avgThroughputImprovement || 15) / 100;
+  const wasteRate = ind.avgWasteRate || 0.05;
+  const peakMult = INDUSTRY_PEAK_MULTIPLIER[industry] || 0.68;
+
+  // 1. 인적 리스크: 신규 채용 및 교육 배용비 (월환산)
+  //    음식업 연 이직률 ~40%, 채용+교육 비용 = 인건비 1.8개월
+  const hrRisk = Math.round((staffCount * 0.40 * avgMonthlyWagePerPerson * 1.8) / 12);
+
+  // 2. 운영 효율성 손실: 피크타임 주문 처리 한계 손실
+  //    현재 놓치는 throughput 기회 × 실현 가능 매출 대비 손실율
+  const operEfficiency = Math.round(monthlyRevenue * throughputPct * peakMult);
+
+  // 3. 품질 관리 손실: 조리 실수·식재료 폐기비용
+  //    식재료 폐기(wasteRate × 매출) + 조리 실수 재처리(매출 1.5%)
+  const qualityLoss = Math.round(monthlyRevenue * (wasteRate + 0.015));
+
+  // 4. 재무적 기타 손실: 운영 공수 및 간접 관리 비용
+  //    직원당 간접 부담 12% (야근·잔업·공수 낭비)
+  const otherLoss = Math.round(staffCount * avgMonthlyWagePerPerson * 0.12);
+
+  const totalMonthly = hrRisk + operEfficiency + qualityLoss + otherLoss;
+  const annualSunkImpact = totalMonthly * 12;
+
+  return { hrRisk, operEfficiency, qualityLoss, otherLoss, totalMonthly, annualSunkImpact };
 }
 
 function generateInsights({ paybackMonths, roiOneYear, monthlyNetBenefit, govSubsidy, threeYearNetBenefit }) {

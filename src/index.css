@@ -1427,6 +1427,174 @@ input[type="range"]::-webkit-slider-thumb:hover {
   .select-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* ===== AS-IS 매몰 비용 대시보드 ===== */
+.asis-panel {
+  background: #0F172A;
+  border-radius: var(--radius-lg);
+  padding: 20px 18px 16px;
+  margin-bottom: 20px;
+  border: 1px solid #1E293B;
+}
+.asis-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.asis-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.asis-badge {
+  font-size: 10px;
+  font-weight: 800;
+  background: #EF4444;
+  color: white;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+.asis-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #CBD5E1;
+  letter-spacing: -0.2px;
+}
+.asis-legend {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: #64748B;
+}
+.asis-legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 4px;
+}
+.asis-legend-dot.fixed { background: #475569; }
+.asis-legend-dot.loss  { background: #EF4444; }
+
+/* 막대 그래프 그리드 */
+.asis-bar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  align-items: end;
+  min-height: 150px;
+  margin-bottom: 18px;
+}
+@media (max-width: 600px) {
+  .asis-bar-grid {
+    grid-template-columns: repeat(2, 1fr);
+    min-height: 120px;
+  }
+}
+.asis-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.asis-bar-amount {
+  font-size: 13px;
+  font-weight: 800;
+  color: #F8FAFC;
+  white-space: nowrap;
+}
+.asis-bar-sub {
+  font-size: 10px;
+  color: #94A3B8;
+  text-align: center;
+  line-height: 1.35;
+  min-height: 28px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.asis-bar-wrap {
+  width: 100%;
+  height: 100px;
+  background: #1E293B;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+@media (max-width: 600px) {
+  .asis-bar-wrap { height: 72px; }
+}
+.asis-bar-fill {
+  width: 100%;
+  background: linear-gradient(180deg, #F97316 0%, #EF4444 100%);
+  border-radius: 3px 3px 0 0;
+  transition: height 0.6s ease;
+}
+.asis-bar-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94A3B8;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* 합계 배너 */
+.asis-totals {
+  display: flex;
+  align-items: center;
+  background: #1E293B;
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.asis-total-item {
+  flex: 1;
+  min-width: 0;
+}
+.asis-total-label {
+  font-size: 11px;
+  color: #64748B;
+  font-weight: 600;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.asis-total-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: #EF4444;
+  letter-spacing: -0.5px;
+}
+.asis-total-value.asis-annual {
+  font-size: 22px;
+  color: #F97316;
+}
+.asis-total-unit {
+  font-size: 13px;
+  font-weight: 600;
+  color: #94A3B8;
+  margin-left: 4px;
+}
+.asis-divider {
+  width: 1px;
+  height: 40px;
+  background: #334155;
+  flex-shrink: 0;
+}
+.asis-disclaimer {
+  font-size: 10px;
+  color: #475569;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
 /* ===== Dark Mode Support ===== */
 @media (prefers-color-scheme: dark) {
   :root {
