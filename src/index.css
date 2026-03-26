@@ -1427,7 +1427,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
   .select-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* ===== AS-IS 매몰 비용 대시보드 ===== */
+/* ===== AS-IS / TO-BE 운영 손실 대시보드 ===== */
 .asis-panel {
   background: #0F172A;
   border-radius: var(--radius-lg);
@@ -1453,12 +1453,12 @@ input[type="range"]::-webkit-slider-thumb:hover {
   font-weight: 800;
   background: #EF4444;
   color: white;
-  padding: 2px 7px;
+  padding: 2px 8px;
   border-radius: 4px;
   letter-spacing: 0.5px;
 }
 .asis-title {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   color: #CBD5E1;
   letter-spacing: -0.2px;
@@ -1466,123 +1466,213 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .asis-legend {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
   font-size: 11px;
-  color: #64748B;
+  color: #94A3B8;
 }
 .asis-legend-dot {
   display: inline-block;
   width: 10px;
   height: 10px;
   border-radius: 2px;
-  margin-right: 4px;
 }
-.asis-legend-dot.fixed { background: #475569; }
-.asis-legend-dot.loss  { background: #EF4444; }
+.asis-legend-dot.asis-dot  { background: #EF4444; }
+.asis-legend-dot.tobe-dot  { background: #16A34A; }
 
-/* 막대 그래프 그리드 */
-.asis-bar-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  align-items: end;
-  min-height: 150px;
-  margin-bottom: 18px;
-}
-@media (max-width: 600px) {
-  .asis-bar-grid {
-    grid-template-columns: repeat(2, 1fr);
-    min-height: 120px;
-  }
-}
-.asis-bar-col {
+/* 항목별 비교 리스트 */
+.asis-compare-list {
   display: flex;
   flex-direction: column;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.asis-compare-item {
+  display: grid;
+  grid-template-columns: 170px 1fr auto;
   align-items: center;
-  gap: 4px;
+  gap: 12px;
+  background: #131C2E;
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  border: 1px solid #1E293B;
 }
-.asis-bar-amount {
+@media (max-width: 680px) {
+  .asis-compare-item {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 왼쪽 항목 정보 */
+.asis-item-meta {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.asis-item-icon { font-size: 20px; flex-shrink: 0; }
+.asis-item-label {
   font-size: 13px;
-  font-weight: 800;
-  color: #F8FAFC;
-  white-space: nowrap;
-}
-.asis-bar-sub {
-  font-size: 10px;
-  color: #94A3B8;
-  text-align: center;
-  line-height: 1.35;
-  min-height: 28px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-.asis-bar-wrap {
-  width: 100%;
-  height: 100px;
-  background: #1E293B;
-  border-radius: 4px 4px 0 0;
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
-}
-@media (max-width: 600px) {
-  .asis-bar-wrap { height: 72px; }
-}
-.asis-bar-fill {
-  width: 100%;
-  background: linear-gradient(180deg, #F97316 0%, #EF4444 100%);
-  border-radius: 3px 3px 0 0;
-  transition: height 0.6s ease;
-}
-.asis-bar-label {
-  font-size: 11px;
   font-weight: 700;
-  color: #94A3B8;
-  text-align: center;
+  color: #F1F5F9;
+  margin-bottom: 2px;
+}
+.asis-item-sub {
+  font-size: 10px;
+  color: #64748B;
   line-height: 1.4;
 }
 
-/* 합계 배너 */
-.asis-totals {
+/* 중앙 바 영역 */
+.asis-bars-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.asis-bar-row {
   display: flex;
   align-items: center;
+  gap: 8px;
+}
+.asis-bar-tag {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  width: 38px;
+  flex-shrink: 0;
+  text-align: center;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+.asis-tag {
+  background: rgba(239, 68, 68, 0.18);
+  color: #FCA5A5;
+}
+.tobe-tag {
+  background: rgba(22, 163, 74, 0.18);
+  color: #86EFAC;
+}
+.asis-bar-track {
+  flex: 1;
+  height: 12px;
+  background: #1E293B;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+}
+.asis-bar-seg {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.8s ease;
+}
+.asis-seg {
+  background: linear-gradient(90deg, #EF4444, #F97316);
+}
+.tobe-seg {
+  background: #16A34A;
+}
+.saving-seg {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 3px,
+    rgba(22,163,74,0.2) 3px,
+    rgba(22,163,74,0.2) 6px
+  );
+}
+.asis-bar-num {
+  font-size: 12px;
+  font-weight: 700;
+  width: 52px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.asis-num { color: #FCA5A5; }
+.tobe-num { color: #86EFAC; }
+
+/* 오른쪽 절감 배지 */
+.asis-saving-badge {
+  text-align: center;
+  background: rgba(22, 163, 74, 0.1);
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+.asis-saving-amount {
+  font-size: 15px;
+  font-weight: 800;
+  color: #4ADE80;
+  letter-spacing: -0.5px;
+}
+.asis-saving-pct {
+  font-size: 11px;
+  font-weight: 700;
+  color: #86EFAC;
+  margin-top: 1px;
+}
+.asis-saving-driver {
+  font-size: 9px;
+  color: #4B5563;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* 하단 합계 비교 */
+.asis-summary-compare {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
   background: #1E293B;
   border-radius: var(--radius-md);
   padding: 14px 18px;
-  gap: 20px;
-  flex-wrap: wrap;
+  margin-bottom: 10px;
 }
-.asis-total-item {
+.asis-summary-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
   flex: 1;
-  min-width: 0;
+  min-width: 100px;
 }
-.asis-total-label {
-  font-size: 11px;
-  color: #64748B;
-  font-weight: 600;
-  margin-bottom: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.asis-summary-badge {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  width: fit-content;
 }
-.asis-total-value {
+.asis-badge-sm  { background: #EF4444; color: white; }
+.tobe-badge-sm  { background: #16A34A; color: white; }
+.saving-badge-sm { background: #2563EB; color: white; }
+
+.asis-summary-val {
   font-size: 20px;
   font-weight: 800;
-  color: #EF4444;
   letter-spacing: -0.5px;
 }
-.asis-total-value.asis-annual {
-  font-size: 22px;
-  color: #F97316;
-}
-.asis-total-unit {
-  font-size: 13px;
+.asis-val    { color: #EF4444; }
+.tobe-val    { color: #4ADE80; }
+.saving-val  { color: #60A5FA; }
+
+.asis-summary-unit {
+  font-size: 12px;
   font-weight: 600;
   color: #94A3B8;
-  margin-left: 4px;
+  margin-left: 3px;
 }
-.asis-divider {
+.asis-summary-annual {
+  font-size: 11px;
+  color: #64748B;
+}
+.asis-summary-arrow {
+  font-size: 20px;
+  color: #475569;
+  flex-shrink: 0;
+}
+.asis-summary-sep {
   width: 1px;
   height: 40px;
   background: #334155;
@@ -1591,7 +1681,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .asis-disclaimer {
   font-size: 10px;
   color: #475569;
-  margin-top: 10px;
+  margin-top: 2px;
   line-height: 1.5;
 }
 

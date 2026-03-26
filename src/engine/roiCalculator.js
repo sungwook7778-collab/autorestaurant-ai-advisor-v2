@@ -245,6 +245,14 @@ export function calculateROI(inputs) {
     // AS-IS 매몰 비용 분석
     asIsLoss: computeAsIsLoss(inputs),
 
+    // TO-BE 개선 후 손실 (자동화 효과 반영)
+    toBeOutcomes: computeToBeOutcomes({
+      inputs,
+      staffReduction,
+      desThroughput,
+      wasteReductionRate,
+    }),
+
     // Hybrid DES 시뮬레이션 결과
     des: desResult,
   };
@@ -254,6 +262,30 @@ export function calculateROI(inputs) {
  * AS-IS 운영 손실 (현재 자동화 미도입 시 매몰 비용) 계산
  * 4개 카테고리: 인적 리스크 / 운영 효율성 손실 / 품질 관리 손실 / 재무적 기타 손실
  */
+/**
+ * TO-BE 운영 손실 (자동화 도입 후 잔존 손실)
+ * AS-IS 대비 각 항목이 얼마나 줄어드는지 계산
+ */
+function computeToBeOutcomes({ inputs, staffReduction, desThroughput, wasteReductionRate }) {
+  const { staffCount } = inputs;
+  const asIs = computeAsIsLoss(inputs);
+
+  // 자동화 후 남은 인력 비율 (인력 감소분 반영)
+  const staffRatio = staffCount > 0 ? Math.max(0, (staffCount - staffReduction) / staffCount) : 1;
+
+  // 각 항목별 TO-BE 잔존 손실
+  const hrRisk      = Math.round(asIs.hrRisk * staffRatio);
+  const operEfficiency = Math.round(asIs.operEfficiency * Math.max(0, 1 - desThroughput / 100));
+  const qualityLoss = Math.round(asIs.qualityLoss * Math.max(0, 1 - wasteReductionRate / 100));
+  const otherLoss   = Math.round(asIs.otherLoss * staffRatio);
+
+  const totalMonthly = hrRisk + operEfficiency + qualityLoss + otherLoss;
+  const monthlySaving = asIs.totalMonthly - totalMonthly;
+  const annualSaving  = monthlySaving * 12;
+
+  return { hrRisk, operEfficiency, qualityLoss, otherLoss, totalMonthly, monthlySaving, annualSaving };
+}
+
 function computeAsIsLoss({ staffCount, avgMonthlyWagePerPerson, monthlyRevenue, industry }) {
   const ind = INDUSTRY_DEFAULTS[industry] || INDUSTRY_DEFAULTS.korean;
   const throughputPct = (ind.avgThroughputImprovement || 15) / 100;

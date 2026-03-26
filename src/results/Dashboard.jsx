@@ -81,7 +81,7 @@ export default function Dashboard({ state, results, onRestart }) {
       />
 
       {/* ── SECTION 2: AS-IS 운영 손실 현황 ── */}
-      <AsIsLossPanel asIsLoss={results.asIsLoss} />
+      <AsIsLossPanel asIsLoss={results.asIsLoss} toBeOutcomes={results.toBeOutcomes} />
 
       {/* ── SECTION 3: 공정별 AS-IS → TO-BE 개선 효과 ── */}
       <ProcessImprovementPanel selectedItems={results.selectedItems} />
