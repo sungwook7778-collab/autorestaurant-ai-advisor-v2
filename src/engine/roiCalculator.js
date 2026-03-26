@@ -253,6 +253,14 @@ export function calculateROI(inputs) {
       wasteReductionRate,
     }),
 
+    // 공정별 운영 개선 지표 (Operational Impact)
+    operationalMetrics: computeOperationalMetrics({
+      inputs,
+      selectedItems: agg.selectedItems,
+      des: desResult,
+      staffReduction,
+    }),
+
     // Hybrid DES 시뮬레이션 결과
     des: desResult,
   };
@@ -262,6 +270,84 @@ export function calculateROI(inputs) {
  * AS-IS 운영 손실 (현재 자동화 미도입 시 매몰 비용) 계산
  * 4개 카테고리: 인적 리스크 / 운영 효율성 손실 / 품질 관리 손실 / 재무적 기타 손실
  */
+/**
+ * 공정별 운영 개선 지표 계산
+ * Prep Time / Hourly Output / Maintenance / Human Value
+ */
+function computeOperationalMetrics({ inputs, selectedItems, des, staffReduction }) {
+  const { staffCount, avgMonthlyWagePerPerson, industry } = inputs;
+
+  const INDUSTRY_PREP = {
+    fastfood: 40, korean: 80, japanese: 85, western: 75, buffet: 95, cafe: 40,
+  };
+  const INDUSTRY_MAINT = {
+    fastfood: 1.8, korean: 2.5, japanese: 2.5, western: 2.2, buffet: 3.5, cafe: 1.5,
+  };
+
+  const basePrep  = INDUSTRY_PREP[industry]  || 75;
+  const baseMaint = INDUSTRY_MAINT[industry] || 2.5;
+
+  // 선택 장비 플래그
+  const hasPrepEquip  = selectedItems.some((i) => i.categoryId === 'prep');
+  const hasStirEquip  = selectedItems.some((i) => i.categoryId === 'stirCook');
+  const hasCombiEquip = selectedItems.some((i) => i.categoryId === 'combi');
+  const hasWashEquip  = selectedItems.some((i) => i.categoryId === 'dishwasher');
+  const hasFryEquip   = selectedItems.some((i) => i.categoryId === 'fryer');
+
+  // Prep Time 감소율
+  let prepRed = 0;
+  if (hasPrepEquip)  prepRed += 0.40;
+  if (hasStirEquip)  prepRed += 0.12;
+  if (hasCombiEquip) prepRed += 0.08;
+  prepRed = Math.min(0.55, prepRed);
+  const tobePrep = Math.max(15, Math.round(basePrep * (1 - prepRed)));
+
+  // Hourly Output (DES 값 직접 사용)
+  const asisOutput = Math.max(1, Math.round(des.baseMu));
+  const tobeOutput = Math.max(asisOutput + 1, Math.round(des.effectiveMu));
+
+  // Maintenance 감소율
+  let maintRed = 0;
+  if (hasWashEquip) maintRed += 0.48;
+  if (hasFryEquip)  maintRed += 0.12;
+  maintRed += selectedItems.length * 0.04;
+  maintRed = Math.min(0.65, maintRed);
+  const tobeMaint = Math.max(0.5, +(baseMaint * (1 - maintRed)).toFixed(1));
+
+  // Human Value (인력 재배치 가치)
+  const monthlyValue = Math.round(staffReduction * avgMonthlyWagePerPerson);
+  const annualValue  = monthlyValue * 12;
+
+  return {
+    prepTime: {
+      before: basePrep,
+      after: tobePrep,
+      changePct: -Math.round(((basePrep - tobePrep) / basePrep) * 100),
+      unit: '분',
+      higherIsBetter: false,
+    },
+    hourlyOutput: {
+      before: asisOutput,
+      after: tobeOutput,
+      changePct: +(((tobeOutput - asisOutput) / asisOutput) * 100).toFixed(1),
+      unit: '건/hr',
+      higherIsBetter: true,
+    },
+    maintenance: {
+      before: baseMaint,
+      after: tobeMaint,
+      changePct: -Math.round(((baseMaint - tobeMaint) / baseMaint) * 100),
+      unit: 'hr/일',
+      higherIsBetter: false,
+    },
+    humanValue: {
+      staffReduction: +staffReduction.toFixed(2),
+      monthlyValue,
+      annualValue,
+    },
+  };
+}
+
 /**
  * TO-BE 운영 손실 (자동화 도입 후 잔존 손실)
  * AS-IS 대비 각 항목이 얼마나 줄어드는지 계산

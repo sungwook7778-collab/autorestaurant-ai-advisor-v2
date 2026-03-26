@@ -8,6 +8,7 @@ import PDFReport from './PDFReport.jsx';
 import AsIsLossPanel from './AsIsLossPanel.jsx';
 import EquipmentListPanel from './EquipmentListPanel.jsx';
 import ProcessImprovementPanel from './ProcessImprovementPanel.jsx';
+import OperationalFinancialPanel from './OperationalFinancialPanel.jsx';
 import { formatWon, formatMonths } from '../utils/formatters.js';
 import { INDUSTRY_DEFAULTS } from '../engine/industryDefaults.js';
 import { formatKitchenEquipmentHeadline } from '../engine/aggregateKitchenSelections.js';
@@ -86,7 +87,10 @@ export default function Dashboard({ state, results, onRestart }) {
       {/* ── SECTION 3: 공정별 AS-IS → TO-BE 개선 효과 ── */}
       <ProcessImprovementPanel selectedItems={results.selectedItems} />
 
-      {/* ── SECTION 4: 핵심 KPI 카드 ── */}
+      {/* ── SECTION 4: 공정별 운영 효과 + 재무 성과 ── */}
+      <OperationalFinancialPanel results={results} />
+
+      {/* ── SECTION 5: 핵심 KPI 카드 ── */}
       <SummaryCards results={results} />
 
       {/* ── SECTION 5: Before/After 비교 ── */}
