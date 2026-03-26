@@ -239,6 +239,9 @@ export function calculateROI(inputs) {
     equipmentSummaryLines,
     proposalRationale: agg.rationale,
 
+    // 도입 장비 상세 리스트
+    selectedItems: agg.selectedItems,
+
     // AS-IS 매몰 비용 분석
     asIsLoss: computeAsIsLoss(inputs),
 

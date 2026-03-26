@@ -6,6 +6,8 @@ import ScenarioAnalysis from './ScenarioAnalysis.jsx';
 import CalculationDetail from './CalculationDetail.jsx';
 import PDFReport from './PDFReport.jsx';
 import AsIsLossPanel from './AsIsLossPanel.jsx';
+import EquipmentListPanel from './EquipmentListPanel.jsx';
+import ProcessImprovementPanel from './ProcessImprovementPanel.jsx';
 import { formatWon, formatMonths } from '../utils/formatters.js';
 import { INDUSTRY_DEFAULTS } from '../engine/industryDefaults.js';
 import { formatKitchenEquipmentHeadline } from '../engine/aggregateKitchenSelections.js';
@@ -32,12 +34,12 @@ export default function Dashboard({ state, results, onRestart }) {
 
   const ind = state.industry ? INDUSTRY_DEFAULTS[state.industry] : null;
   const equipmentHeadline = formatKitchenEquipmentHeadline(state);
-
   const isPositive = results.roiOneYear > 0;
 
   return (
     <div className="results-wrap">
-      {/* 결과 헤더 배너 */}
+
+      {/* ── 결과 헤더 배너 ── */}
       <div className="results-header">
         <div className="results-header-top">
           <div>
@@ -71,22 +73,32 @@ export default function Dashboard({ state, results, onRestart }) {
         </div>
       </div>
 
-      {/* AS-IS 매몰 비용 분석 */}
+      {/* ── SECTION 1: 도입 장비 리스트 ── */}
+      <EquipmentListPanel
+        selectedItems={results.selectedItems}
+        totalInvestment={results.totalInvestment}
+        monthlyRobotCost={results.monthlyRobotCost}
+      />
+
+      {/* ── SECTION 2: AS-IS 운영 손실 현황 ── */}
       <AsIsLossPanel asIsLoss={results.asIsLoss} />
 
-      {/* 핵심 KPI 카드 */}
+      {/* ── SECTION 3: 공정별 AS-IS → TO-BE 개선 효과 ── */}
+      <ProcessImprovementPanel selectedItems={results.selectedItems} />
+
+      {/* ── SECTION 4: 핵심 KPI 카드 ── */}
       <SummaryCards results={results} />
 
-      {/* Before/After 비교 */}
+      {/* ── SECTION 5: Before/After 비교 ── */}
       <BeforeAfterChart results={results} />
 
-      {/* 3년 누적 추이 */}
+      {/* ── SECTION 6: 3년 누적 추이 ── */}
       <TimelineChart results={results} />
 
-      {/* 시나리오 분석 */}
+      {/* ── SECTION 7: 시나리오 분석 ── */}
       <ScenarioAnalysis results={results} />
 
-      {/* 정부 지원 비교 */}
+      {/* ── SECTION 8: 정부 지원 비교 (조건부) ── */}
       {state.applySubsidy && (
         <div className="chart-section">
           <div className="chart-title"><span>🏛️</span> 정부 지원 효과 분석</div>
@@ -118,10 +130,10 @@ export default function Dashboard({ state, results, onRestart }) {
         </div>
       )}
 
-      {/* 계산 방식 */}
+      {/* ── SECTION 9: 계산 방식 ── */}
       <CalculationDetail results={results} inputs={state} />
 
-      {/* 리포트 및 공유 */}
+      {/* ── SECTION 10: 리포트 및 공유 ── */}
       <PDFReport state={state} results={results} onToast={setToast} />
 
       {/* 다시 시작 */}
@@ -129,7 +141,6 @@ export default function Dashboard({ state, results, onRestart }) {
         🔄 다른 조건으로 다시 시뮬레이션
       </button>
 
-      {/* 토스트 메시지 */}
       {toast && <Toast message={toast} onClose={() => setToast(null)} />}
     </div>
   );

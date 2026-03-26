@@ -1595,6 +1595,379 @@ input[type="range"]::-webkit-slider-thumb:hover {
   line-height: 1.5;
 }
 
+/* ===== 도입 장비 리스트 패널 ===== */
+.equip-list-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px 18px;
+  margin-bottom: 20px;
+}
+.equip-list-header { margin-bottom: 18px; }
+.equip-list-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.equip-list-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.equip-list-sub {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.equip-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.equip-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.equip-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.equip-card-num {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--primary);
+  background: var(--primary-light);
+  border-radius: 4px;
+  padding: 2px 6px;
+  flex-shrink: 0;
+}
+.equip-card-category {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.equip-card-icon { font-size: 15px; }
+.equip-card-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+}
+.equip-card-mfr {
+  font-size: 11px;
+  color: var(--text-light);
+  background: var(--border);
+  border-radius: 4px;
+  padding: 2px 7px;
+  display: inline-block;
+  width: fit-content;
+}
+.equip-card-note {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.equip-card-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 0 4px;
+  border-top: 1px solid var(--border);
+}
+.equip-metric-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.equip-metric-key {
+  font-size: 10px;
+  color: var(--text-light);
+  width: 54px;
+  flex-shrink: 0;
+}
+.equip-bar-wrap {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.equip-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: var(--primary);
+  transition: width 0.8s ease;
+}
+.equip-metric-val {
+  font-size: 11px;
+  font-weight: 700;
+  width: 44px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.equip-metric-val.tp { color: #2563EB; }
+.equip-metric-val.wp { color: #D97706; }
+.equip-metric-val.sf { color: #7C3AED; }
+
+.equip-card-cost-row {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0 2px;
+  border-top: 1px solid var(--border);
+}
+.equip-cost-item { flex: 1; }
+.equip-cost-label {
+  font-size: 10px;
+  color: var(--text-light);
+  margin-bottom: 2px;
+}
+.equip-cost-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.equip-cost-value.monthly { color: #7C3AED; }
+.equip-cost-divider {
+  width: 1px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.equip-list-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  background: var(--primary-light);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+}
+.equip-summary-item { display: flex; flex-direction: column; gap: 2px; }
+.equip-summary-label {
+  font-size: 10px;
+  color: var(--text-light);
+  font-weight: 600;
+}
+.equip-summary-value {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+}
+.equip-summary-value.monthly { color: #7C3AED; }
+.equip-summary-sep {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-light);
+  margin: 0 2px;
+}
+.equip-summary-item.highlight .equip-summary-value {
+  color: var(--primary);
+  font-size: 16px;
+}
+
+/* ===== 공정별 AS-IS → TO-BE 개선 효과 패널 ===== */
+.proc-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px 18px;
+  margin-bottom: 20px;
+}
+.proc-panel-header { margin-bottom: 20px; }
+.proc-panel-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.proc-panel-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.proc-panel-sub {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.proc-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.proc-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.proc-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.proc-card-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.proc-card-icon { font-size: 20px; }
+.proc-card-process {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-light);
+  margin-bottom: 2px;
+}
+.proc-card-equip {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text);
+}
+.proc-card-mfr-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--border);
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+
+.proc-compare-row {
+  display: grid;
+  grid-template-columns: 1fr 32px 1fr;
+  align-items: stretch;
+  padding: 14px;
+  gap: 12px;
+}
+@media (max-width: 600px) {
+  .proc-compare-row {
+    grid-template-columns: 1fr;
+  }
+  .proc-arrow { display: none; }
+}
+
+.proc-side {
+  border-radius: var(--radius-sm);
+  padding: 12px;
+}
+.proc-side.asis {
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+.proc-side.tobe {
+  background: rgba(22, 163, 74, 0.05);
+  border: 1px solid rgba(22, 163, 74, 0.2);
+}
+.proc-side-label {
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  letter-spacing: 0.02em;
+}
+.proc-issue-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.proc-issue-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.proc-issue-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.proc-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+}
+
+.proc-metrics-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--card);
+}
+.proc-metric-chip {
+  flex: 1;
+  min-width: 120px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+}
+.proc-metric-chip.solo { flex: 0 1 auto; }
+.proc-metric-chip-label {
+  font-size: 10px;
+  color: var(--text-light);
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.proc-contrib-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.proc-contrib-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+.proc-metric-chip-val {
+  font-size: 12px;
+  font-weight: 700;
+}
+.proc-metric-chip-val.tp { color: #2563EB; }
+.proc-metric-chip-val.wp { color: #D97706; }
+.proc-metric-chip-val.sf { color: #7C3AED; }
+.proc-metric-chip-sub {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-light);
+  margin-left: 4px;
+}
+
 /* ===== Dark Mode Support ===== */
 @media (prefers-color-scheme: dark) {
   :root {

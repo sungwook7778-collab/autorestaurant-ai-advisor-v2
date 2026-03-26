@@ -110,11 +110,18 @@ export function aggregateKitchenFromState(state) {
     rationale,
     summaryLines,
     selectedItems: selected.map(({ category, option }) => ({
+      categoryId: category.id,
       categoryName: category.name,
+      categoryIcon: category.icon,
+      categoryDesc: category.desc,
       name: option.name,
       manufacturer: option.manufacturer,
       price: option.price,
       priceNote: option.priceNote,
+      monthlyCost: option.monthlyCost + option.powerCostPerMonth,
+      throughputPts: option.throughputPts,
+      wastePts: option.wastePts,
+      staffEquiv: option.staffEquiv,
     })),
   };
 }
