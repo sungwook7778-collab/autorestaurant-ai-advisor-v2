@@ -1,0 +1,2 @@
+# SPA fallback (all platforms that support _redirects)
+/*    /index.html   200

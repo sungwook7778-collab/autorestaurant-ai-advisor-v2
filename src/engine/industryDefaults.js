@@ -1,0 +1,103 @@
+/**
+ * 업종별 평균 기본값 데이터
+ * 출처: 통계청 서비스업조사, 소상공인시장진흥공단 실태조사 기준
+ */
+export const INDUSTRY_DEFAULTS = {
+  korean: {
+    id: 'korean',
+    name: '한식당',
+    emoji: '🍚',
+    desc: '한정식·백반·국밥',
+    avgMonthlyRevenue: 18000000,
+    avgStaffCount: 4,
+    avgMonthlyWagePerPerson: 2500000,
+    avgSeats: 60,
+    avgWasteRate: 0.06,
+    avgThroughputImprovement: 18,
+    color: '#EF4444',
+  },
+  japanese: {
+    id: 'japanese',
+    name: '일식·중식',
+    emoji: '🍜',
+    desc: '라멘·스시·중화요리',
+    avgMonthlyRevenue: 20000000,
+    avgStaffCount: 4,
+    avgMonthlyWagePerPerson: 2600000,
+    avgSeats: 50,
+    avgWasteRate: 0.05,
+    avgThroughputImprovement: 15,
+    color: '#F97316',
+  },
+  fastfood: {
+    id: 'fastfood',
+    name: '분식·패스트푸드',
+    emoji: '🍔',
+    desc: '분식·버거·치킨',
+    avgMonthlyRevenue: 12000000,
+    avgStaffCount: 3,
+    avgMonthlyWagePerPerson: 2300000,
+    avgSeats: 40,
+    avgWasteRate: 0.04,
+    avgThroughputImprovement: 20,
+    color: '#EAB308',
+  },
+  cafe: {
+    id: 'cafe',
+    name: '카페·디저트',
+    emoji: '☕',
+    desc: '카페·케이크·빙수',
+    avgMonthlyRevenue: 10000000,
+    avgStaffCount: 3,
+    avgMonthlyWagePerPerson: 2200000,
+    avgSeats: 45,
+    avgWasteRate: 0.05,
+    avgThroughputImprovement: 12,
+    color: '#8B5CF6',
+  },
+  western: {
+    id: 'western',
+    name: '양식·퓨전',
+    emoji: '🍝',
+    desc: '파스타·피자·스테이크',
+    avgMonthlyRevenue: 25000000,
+    avgStaffCount: 5,
+    avgMonthlyWagePerPerson: 2700000,
+    avgSeats: 70,
+    avgWasteRate: 0.07,
+    avgThroughputImprovement: 15,
+    color: '#10B981',
+  },
+  buffet: {
+    id: 'buffet',
+    name: '뷔페·단체급식',
+    emoji: '🍽️',
+    desc: '뷔페·구내식당',
+    avgMonthlyRevenue: 35000000,
+    avgStaffCount: 7,
+    avgMonthlyWagePerPerson: 2400000,
+    avgSeats: 120,
+    avgWasteRate: 0.09,
+    avgThroughputImprovement: 22,
+    color: '#2563EB',
+  },
+};
+
+/**
+ * 2025 정부 지원 정책 정보
+ */
+export const GOVERNMENT_SUBSIDY = {
+  programName: '2025 스마트상점 기술보급사업',
+  operator: '소상공인시장진흥공단',
+  maxSubsidy: 10000000,
+  subsidyRate: 0.50,
+  selfFundingRate: 0.50,
+  targetYear: 2025,
+  deadline: '2025년 12월 31일',
+  eligibility: [
+    '음식업·소매업·서비스업 소상공인',
+    '연매출 10억 원 미만',
+    '사업자 등록 1년 이상',
+  ],
+  additionalInfo: '지자체 매칭 지원 시 최대 70% (지방비 20% 추가) 혜택 가능',
+};

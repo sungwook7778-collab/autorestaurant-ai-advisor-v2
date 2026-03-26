@@ -1,0 +1,5 @@
+# Cloudflare Pages (CLI 배포 시)
+# 대시보드 연결 시: 빌드 명령 npm run build, 출력 디렉터리 dist
+name = "freekit-roi-simulator"
+compatibility_date = "2024-11-01"
+pages_build_output_dir = "dist"

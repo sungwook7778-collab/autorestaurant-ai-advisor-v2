@@ -1,0 +1,36 @@
+{
+  "name": "freekit-roi-simulator",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "start": "vite",
+    "dev:public": "concurrently -k -n \"vite,tunnel\" -c \"cyan,magenta\" \"vite --strictPort\" \"wait-on http://127.0.0.1:5183 && lt --port 5183\"",
+    "dev:cloudflare": "concurrently -k -n \"vite,tunnel\" -c \"cyan,magenta\" \"vite --strictPort\" \"wait-on http://127.0.0.1:5183 && cloudflared tunnel --url http://127.0.0.1:5183\"",
+    "dev:cloudflare:named": "concurrently -k -n \"vite,tunnel\" -c \"cyan,magenta\" \"vite --strictPort\" \"wait-on http://127.0.0.1:5183 && cloudflared tunnel --config cloudflared/config.yml run\"",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy:vercel": "npx vercel deploy --prod",
+    "deploy:cf-pages": "npm run build && npx wrangler pages deploy dist --project-name=freekit-roi-simulator",
+    "preview:public": "concurrently -k -n \"preview,tunnel\" -c \"cyan,magenta\" \"vite preview --port 4173 --strictPort\" \"wait-on http://127.0.0.1:4173 && lt --port 4173\"",
+    "preview:cloudflare": "concurrently -k -n \"preview,tunnel\" -c \"cyan,magenta\" \"vite preview --port 4173 --strictPort\" \"wait-on http://127.0.0.1:4173 && cloudflared tunnel --url http://127.0.0.1:4173\""
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.12.7",
+    "jspdf": "^2.5.1",
+    "html2canvas": "^1.4.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "concurrently": "^9.1.2",
+    "localtunnel": "^2.0.2",
+    "vite": "^5.4.2",
+    "wait-on": "^8.0.1"
+  }
+}

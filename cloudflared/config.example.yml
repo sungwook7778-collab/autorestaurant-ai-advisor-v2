@@ -1,0 +1,16 @@
+# 사용법:
+# 1) 이 파일을 config.yml 로 복사 (config.yml 은 Git 에 올리지 마세요)
+# 2) Cloudflare 대시보드 Zero Trust → Networks → Tunnels 에서 터널 생성
+#    또는 CLI: cloudflared tunnel login 후 cloudflared tunnel create freekit-roi
+# 3) 아래 tunnel UUID 와 credentials-file 경로를 본인 환경에 맞게 수정
+# 4) DNS: 같은 호스트명으로 CNAME 을 <tunnel-id>.cfargotunnel.com 으로 추가
+# 5) npm run dev:cloudflare:named
+
+tunnel: 00000000-0000-0000-0000-000000000000
+credentials-file: C:\Users\YOUR_WINDOWS_USER\.cloudflared\00000000-0000-0000-0000-000000000000.json
+
+ingress:
+  # Vite 개발 서버 기본 포트 5183 (npm run dev 동일)
+  - hostname: roi.example.com
+    service: http://127.0.0.1:5183
+  - service: http_status:404
