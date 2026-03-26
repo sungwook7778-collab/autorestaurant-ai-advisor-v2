@@ -131,7 +131,6 @@ export default function AsIsLossPanel({ asIsLoss, toBeOutcomes }) {
                 <div className="asis-saving-badge">
                   <div className="asis-saving-amount">-{Math.round(saving / 10000)}만</div>
                   <div className="asis-saving-pct">{savingPct}% 절감</div>
-                  <div className="asis-saving-driver">{driver}</div>
                 </div>
               )}
             </div>

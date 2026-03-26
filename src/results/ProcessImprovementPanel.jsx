@@ -127,7 +127,7 @@ export default function ProcessImprovementPanel({ selectedItems }) {
               <div className="proc-card-header">
                 <div className="proc-card-header-left">
                   <span className="proc-card-icon">{item.categoryIcon}</span>
-                  <div>
+                  <div className="proc-card-text">
                     <div className="proc-card-process">{profile.processLabel}</div>
                     <div className="proc-card-equip">{item.name}</div>
                   </div>
@@ -189,8 +189,8 @@ export default function ProcessImprovementPanel({ selectedItems }) {
                 <div className="proc-metric-chip solo">
                   <div className="proc-metric-chip-label">인력 절감</div>
                   <div className="proc-metric-chip-val sf">
-                    월 {laborHrs}h 절감
-                    <span className="proc-metric-chip-sub">({item.staffEquiv.toFixed(2)} FTE)</span>
+                    {laborHrs}h/월
+                    <span className="proc-metric-chip-sub"> ({item.staffEquiv.toFixed(2)} FTE)</span>
                   </div>
                 </div>
               </div>
