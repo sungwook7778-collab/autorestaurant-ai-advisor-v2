@@ -1697,7 +1697,8 @@ input[type="range"]::-webkit-slider-thumb:hover {
 @media (max-width: 860px) {
   .opfin-wrap { grid-template-columns: 1fr; }
 }
-.opfin-left, .opfin-right { display: flex; flex-direction: column; }
+.opfin-left  { display: flex; flex-direction: column; justify-content: space-between; }
+.opfin-right { display: flex; flex-direction: column; justify-content: space-between; }
 
 /* 怨듯넻 ?ㅻ뜑 */
 .opfin-hdr { margin-bottom: 14px; }
@@ -1716,6 +1717,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
 /* 硫뷀듃由?由ъ뒪??(?⑥씪 而щ읆) */
 .opfin-metric-list {
   display: flex; flex-direction: column; gap: 8px; flex: 1;
+  justify-content: space-between;
 }
 .opfin-mcard {
   background: #F9FAFB; border: 1px solid #E5E7EB;
@@ -1804,9 +1806,9 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 .opfin-chart-lbl {
   font-size: 9px; font-weight: 700; color: #9CA3AF;
-  letter-spacing: 0.08em; margin: 10px 0 5px;
+  letter-spacing: 0.08em; margin: 0 0 5px;
 }
-.opfin-chart-box { position: relative; margin-bottom: 10px; }
+.opfin-chart-box { position: relative; }
 .opfin-golden {
   font-size: 10px; font-weight: 700; color: #F97316;
   text-align: center; margin-top: 3px;
@@ -1818,57 +1820,49 @@ input[type="range"]::-webkit-slider-thumb:hover {
   letter-spacing: 0.08em; margin-bottom: 7px;
 }
 
-/* 연도별 누적 수익 바 */
-.opfin-yearly {
-  margin: 10px 0 8px; padding: 12px 14px;
-  background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 10px;
-}
-.opfin-yr-row {
-  display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
-}
-.opfin-yr-row:last-child { margin-bottom: 0; }
-.opfin-yr-label {
-  font-size: 11px; font-weight: 700; color: #374151;
-  width: 36px; flex-shrink: 0; white-space: nowrap;
-}
-.opfin-yr-track {
-  flex: 1; height: 10px; background: #E5E7EB; border-radius: 5px; overflow: hidden;
-}
-.opfin-yr-fill {
-  height: 100%; border-radius: 5px; transition: width 0.9s ease;
-}
-.opfin-yr-val {
-  font-size: 12px; font-weight: 700; width: 64px;
-  text-align: right; flex-shrink: 0; white-space: nowrap;
-}
-.yr-pos { color: #047857; }
-.yr-neg { color: #DC2626; }
-
-/* 월 수익 구성 비율 */
+/* 월 수익 구성 비율 (확장형) */
 .opfin-gains {
-  margin-bottom: 10px; padding: 12px 14px;
+  padding: 12px 14px;
   background: #F8FAFC; border: 1px solid #E5E7EB; border-radius: 10px;
 }
-.opfin-gains-bar {
+.opfin-gains-top {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.opfin-gains-total-val {
+  font-size: 12px; font-weight: 700; color: #111827; white-space: nowrap;
+}
+.opfin-gains-total-val small { font-size: 10px; font-weight: 500; color: #9CA3AF; margin-left: 2px; }
+/* stacked 비율 바 */
+.opfin-gains-stack {
   height: 12px; border-radius: 6px; overflow: hidden;
-  display: flex; margin-bottom: 10px; gap: 2px;
+  display: flex; margin-bottom: 12px; gap: 2px;
 }
 .opfin-gains-seg {
   height: 100%; transition: width 0.9s ease; min-width: 4px;
 }
 .opfin-gains-seg:first-child { border-radius: 6px 0 0 6px; }
 .opfin-gains-seg:last-child  { border-radius: 0 6px 6px 0; }
-.opfin-gains-legend { display: flex; gap: 6px; }
-.opfin-gains-item {
-  display: flex; align-items: center; gap: 4px; flex: 1; min-width: 0;
+/* 항목별 개별 바 */
+.opfin-gains-rows { display: flex; flex-direction: column; gap: 7px; }
+.opfin-gains-item-row { display: flex; flex-direction: column; gap: 3px; }
+.opfin-gains-item-header {
+  display: flex; align-items: center; gap: 5px;
 }
-.opfin-gains-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.opfin-gains-name { font-size: 10px; color: #6B7280; white-space: nowrap; flex-shrink: 0; }
-.opfin-gains-amt  { font-size: 10px; font-weight: 700; color: #111827; margin-left: auto; white-space: nowrap; }
+.opfin-gains-dot   { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.opfin-gains-name  { font-size: 10px; color: #6B7280; white-space: nowrap; flex-shrink: 0; flex: 1; }
+.opfin-gains-pct   { font-size: 10px; font-weight: 700; white-space: nowrap; }
+.opfin-gains-amt   { font-size: 11px; font-weight: 700; color: #111827; white-space: nowrap; }
+.opfin-gains-item-track {
+  height: 6px; background: #E5E7EB; border-radius: 3px; overflow: hidden;
+}
+.opfin-gains-item-fill {
+  height: 100%; border-radius: 3px; transition: width 0.9s ease;
+}
 
 /* KPI 4박스 */
 .opfin-kpi-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
 }
 .opfin-kbox {
   background: #1E293B; border-radius: 10px; padding: 12px 14px;
