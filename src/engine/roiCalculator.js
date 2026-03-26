@@ -5,6 +5,7 @@
  */
 import { aggregateKitchenFromState } from './aggregateKitchenSelections.js';
 import { INDUSTRY_DEFAULTS } from './industryDefaults.js';
+import { runHybridDES } from './desSimulation.js';
 
 const DISCOUNT_RATE_MONTHLY = 0.03 / 12; // 연 3% 할인율
 const PROFIT_MARGIN_MULTIPLIER = 0.25; // 매출 증가분의 25%를 순이익으로 가정
@@ -50,6 +51,19 @@ export function calculateROI(inputs) {
   } = agg;
 
   // ────────────────────────────────────────────
+  // 0. Hybrid DES 시뮬레이션 (보수적 처리량 산출)
+  // ────────────────────────────────────────────
+  const desResult = runHybridDES({
+    staffCount,
+    monthlyRevenue,
+    seats,
+    industry: industry || 'korean',
+    agg,
+  });
+  // DES P25(보수적) 처리량을 ROI 계산에 반영 (단순 카탈로그값 대신)
+  const desThroughput = desResult.conservativeThroughput;
+
+  // ────────────────────────────────────────────
   // 1. 투자 비용 계산
   // ────────────────────────────────────────────
   const installationCost = robotBasePrice * 0.05;
@@ -71,7 +85,8 @@ export function calculateROI(inputs) {
     const laborSavings = staffReduction * wagePerPerson;
 
     // 매출 처리량 증가 (Throughput) → 순이익 기여
-    const throughputGain = (monthlyRevenue * (throughputImprovement / 100)) * PROFIT_MARGIN_MULTIPLIER;
+    // DES 보수적 처리량(P25) 적용 — 단순 카탈로그 수치보다 신뢰도 높은 예측
+    const throughputGain = (monthlyRevenue * (desThroughput / 100)) * PROFIT_MARGIN_MULTIPLIER;
 
     // 폐기물 감소 (Waste Reduction)
     const wasteBeforeCost = monthlyRevenue * 0.04; // 식재료비의 약 4%가 폐기
@@ -226,6 +241,9 @@ export function calculateROI(inputs) {
 
     // AS-IS 매몰 비용 분석
     asIsLoss: computeAsIsLoss(inputs),
+
+    // Hybrid DES 시뮬레이션 결과
+    des: desResult,
   };
 }
 

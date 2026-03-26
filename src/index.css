@@ -1595,6 +1595,251 @@ input[type="range"]::-webkit-slider-thumb:hover {
   line-height: 1.5;
 }
 
+/* ===== Hybrid DES 시뮬레이션 패널 ===== */
+.des-panel {
+  background: #0A0F1E;
+  border: 1px solid #1E2D45;
+  border-left: 3px solid #EF4444;
+  border-radius: var(--radius-lg);
+  padding: 22px 20px 16px;
+  margin-bottom: 20px;
+  color: #CBD5E1;
+}
+
+/* 헤더 */
+.des-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.des-eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  color: #EF4444;
+  letter-spacing: 0.05em;
+  margin-bottom: 3px;
+}
+.des-step-label {
+  font-size: 15px;
+  font-weight: 800;
+  color: #F8FAFC;
+  margin-bottom: 5px;
+}
+.des-desc {
+  font-size: 12px;
+  color: #64748B;
+  line-height: 1.5;
+}
+.des-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.des-meta-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #1E293B;
+  color: #94A3B8;
+  border: 1px solid #334155;
+  letter-spacing: 0.04em;
+}
+.des-meta-badge.green { background: #052E16; color: #22C55E; border-color: #166534; }
+
+/* 스텝 인디케이터 */
+.des-steps-row {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #1E293B;
+  padding-bottom: 12px;
+}
+.des-step-pill {
+  font-size: 10px;
+  font-weight: 600;
+  color: #475569;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid #1E293B;
+  white-space: nowrap;
+}
+.des-step-pill.active {
+  color: #EF4444;
+  border-color: #EF4444;
+  background: rgba(239, 68, 68, 0.07);
+}
+
+/* 본문 2-컬럼 */
+.des-body {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 16px;
+}
+@media (max-width: 700px) {
+  .des-body { grid-template-columns: 1fr; }
+}
+
+/* 방법론 카드 */
+.des-methods-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #EF4444;
+  margin-bottom: 12px;
+  letter-spacing: -0.2px;
+}
+.des-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.des-method-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #111827;
+  border: 1px solid #1E293B;
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+}
+.des-method-chart {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 128px;
+  height: 56px;
+}
+.des-method-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #F1F5F9;
+  margin-bottom: 4px;
+}
+.des-method-desc {
+  font-size: 11px;
+  color: #64748B;
+  line-height: 1.5;
+}
+
+/* 엔진 플로우 */
+.des-engine-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.des-engine-box {
+  background: #111827;
+  border: 1px solid #1E293B;
+  border-radius: var(--radius-md);
+  padding: 12px;
+}
+.des-engine-box.output {
+  border-color: #1D3A5F;
+}
+.des-engine-box-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+}
+.des-engine-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.des-engine-input-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+}
+.des-input-key { color: #94A3B8; }
+.des-input-val { font-weight: 700; color: #F1F5F9; }
+
+.des-engine-arrow {
+  text-align: center;
+  color: #334155;
+  font-size: 18px;
+  line-height: 1;
+  padding: 2px 0;
+}
+
+/* DES ENGINE CORE */
+.des-engine-core {
+  background: #0D1B2A;
+  border: 1.5px solid #EF4444;
+  border-radius: var(--radius-md);
+  padding: 12px;
+  box-shadow: 0 0 16px rgba(239,68,68,0.12);
+}
+.des-engine-core-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #F97316;
+  letter-spacing: 0.03em;
+  margin-bottom: 2px;
+}
+.des-engine-core-sub {
+  font-size: 9px;
+  font-weight: 700;
+  color: #EF4444;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+.des-dist-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.des-dist-label { font-size: 9px; color: #64748B; width: 22px; flex-shrink: 0; }
+.des-dist-track {
+  flex: 1;
+  height: 5px;
+  background: #1E293B;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.des-dist-fill {
+  height: 100%;
+  background: #334155;
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+.des-dist-fill.highlight { background: linear-gradient(90deg, #EF4444, #F97316); }
+.des-dist-val { font-size: 9px; font-weight: 700; color: #94A3B8; width: 40px; text-align: right; flex-shrink: 0; }
+.des-dist-note { font-size: 9px; color: #334155; margin-top: 4px; }
+
+/* VALUE PREDICTION */
+.des-prediction-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #1E293B;
+  padding: 6px 0;
+  gap: 8px;
+}
+.des-prediction-row:last-child { border-bottom: none; }
+.des-pred-label { font-size: 11px; color: #94A3B8; flex-shrink: 0; }
+.des-pred-right { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+.des-pred-note { font-size: 9px; color: #475569; }
+.des-pred-value { font-size: 13px; font-weight: 800; }
+
+.des-disclaimer {
+  font-size: 10px;
+  color: #334155;
+  margin-top: 14px;
+  line-height: 1.5;
+}
+
 /* ===== Dark Mode Support ===== */
 @media (prefers-color-scheme: dark) {
   :root {
